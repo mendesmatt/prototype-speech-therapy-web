@@ -1,0 +1,8 @@
+error_log
+*.log
+*.zip
+*.tar.gz
+*.sql
+node_modules/
+.cpanel/
+.well-known/
