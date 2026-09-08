@@ -1,7 +1,3 @@
-/* Instituto Londucci — App do Paciente
-   Estilos customizados (moldura, animações, overlays)
-   Tailwind via CDN cuida do restante das utilitárias */
-
 * { -webkit-tap-highlight-color: transparent; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -13,7 +9,6 @@ body {
   padding: 20px 0;
 }
 
-/* Phone frame */
 .phone {
   width: 375px;
   height: 750px;
@@ -46,7 +41,6 @@ body {
   z-index: 50;
 }
 
-/* Scrollable content */
 .content {
   flex: 1;
   overflow-y: auto;
@@ -55,7 +49,6 @@ body {
 }
 .content::-webkit-scrollbar { width: 0; display: none; }
 
-/* Tab views */
 .tab-view { display: none; animation: fadeIn 0.35s ease; }
 .tab-view.active { display: block; }
 @keyframes fadeIn {
@@ -63,13 +56,11 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Bottom nav */
 .nav-btn { transition: color 0.2s, transform 0.15s; }
 .nav-btn.active { color: #0284C7; }
 .nav-btn.active .nav-icon-wrap { background: #E0F2FE; transform: translateY(-2px); }
 .nav-icon-wrap { transition: all 0.2s; }
 
-/* Sheet / modal */
 .overlay {
   position: absolute;
   inset: 0;
@@ -99,11 +90,9 @@ body {
   border-radius: 999px; margin: 8px auto 16px;
 }
 
-/* Progress ring */
 .ring-bg { stroke: #E2E8F0; }
 .ring-fg { stroke: #0284C7; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
 
-/* Toast */
 .toast {
   position: absolute;
   bottom: 90px; left: 50%;

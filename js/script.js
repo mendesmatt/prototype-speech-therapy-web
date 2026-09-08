@@ -1,8 +1,3 @@
-/* Instituto Londucci — App do Paciente
-   Lógica de interação: navegação de abas, cronômetro, gravação
-   simulada, pagamentos, agendamento e gráficos */
-
-/* ========== CLOCK ========== */
 function updateClock() {
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
@@ -12,7 +7,6 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 10000);
 
-/* ========== TABS ========== */
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
@@ -25,7 +19,6 @@ function switchTab(tab, btn) {
   document.getElementById('content').scrollTop = 0;
 }
 
-/* ========== TOAST ========== */
 let toastTimer;
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast');
@@ -42,7 +35,6 @@ function showToast(msg, type = 'success') {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
-/* ========== WEEK CALENDAR (Treino) ========== */
 const weekDays = [
   { d: 'S', done: true },
   { d: 'T', done: true },
@@ -73,7 +65,6 @@ function renderWeekCalendar() {
 }
 renderWeekCalendar();
 
-/* ========== EVOLUTION CHART (Perfil) ========== */
 const evoData = [
   { h: 42, c: 'from-sereno-light to-sereno' },
   { h: 55, c: 'from-sereno-light to-sereno' },
@@ -88,11 +79,10 @@ function renderEvoChart() {
       <span class="text-[10px] font-bold text-slate-500 mb-1">${bar.h}%</span>
       <div class="w-full rounded-t-lg bg-gradient-to-t ${bar.c}" style="height:0%;transition:height 0.7s ease ${i*0.1}s" data-h="${bar.h}"></div>
     </div>`).join('');
-  // animate when perfil tab visible
+
 }
 renderEvoChart();
 
-// Animate chart when profile tab is opened
 const perfilObserver = new MutationObserver(() => {
   const perfil = document.getElementById('tab-perfil');
   if (perfil.classList.contains('active')) {
@@ -107,7 +97,6 @@ const perfilObserver = new MutationObserver(() => {
 });
 perfilObserver.observe(document.getElementById('tab-perfil'), { attributes: true, attributeFilter: ['class'] });
 
-/* ========== EXERCISE MODAL + TIMER ========== */
 let timerInterval, recInterval;
 function openExercise() {
   document.getElementById('exerciseOverlay').classList.add('open');
@@ -121,7 +110,7 @@ let totalTime = 30, timeLeft = 30;
 const ringLen = 490;
 function startTimer() {
   const btn = document.getElementById('timerBtn');
-  if (timerInterval) { // pause
+  if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
     btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Continuar';
@@ -135,7 +124,7 @@ function startTimer() {
     const s = String(timeLeft % 60).padStart(2, '0');
     document.getElementById('timerText').textContent = `${m}:${s}`;
     document.getElementById('timerRing').style.strokeDashoffset = ringLen * (1 - timeLeft / totalTime);
-    // cycle breathing phase every ~4s
+
     const phaseIdx = Math.floor((totalTime - timeLeft) / 3) % phases.length;
     document.getElementById('timerPhase').textContent = phases[phaseIdx];
     if (timeLeft <= 0) {
@@ -151,7 +140,7 @@ function finishExercise() {
   document.getElementById('timerRing').style.stroke = '#10B981';
   document.getElementById('timerBtn').innerHTML =
     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Treino concluído';
-  // mark today as done
+
   const todayIdx = weekDays.findIndex(d => d.today);
   if (todayIdx >= 0) {
     weekDays[todayIdx].done = true;
@@ -186,7 +175,6 @@ function updateWeekProgress(done, total) {
   if (label) label.textContent = `${done} de ${total} dias de treino concluídos. ${done === total ? 'Meta batida! 🎉' : 'Falta pouco!'}`;
 }
 
-/* ========== RECORD (simulated) ========== */
 let recording = false, recSeconds = 0;
 function toggleRecord(btn) {
   if (!recording) {
@@ -219,7 +207,6 @@ function stopRecord() {
   document.getElementById('recLabel').textContent = 'Gravar minha dicção';
 }
 
-/* ========== AGENDA ========== */
 function confirmPresence(btn) {
   btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Presença Confirmada';
   btn.classList.remove('bg-white', 'text-sereno-dark');
@@ -228,7 +215,6 @@ function confirmPresence(btn) {
   showToast('Presença confirmada para 08/08 ✓', 'success');
 }
 
-/* ========== SCHEDULER ========== */
 const schedDays = [
   { label: 'Seg', num: '11' },
   { label: 'Ter', num: '12' },
@@ -302,7 +288,6 @@ function confirmSchedule() {
   showToast(`Consulta agendada: ${d}/08 às ${s} ✓`, 'success');
 }
 
-/* ========== FINANCEIRO ========== */
 function markPaid() {
   document.getElementById('invoiceTag').textContent = 'PAGO';
   document.getElementById('invoiceTag').classList.remove('bg-amber-100', 'text-amber-700');
@@ -355,7 +340,6 @@ function renderQR() {
     `<div class="${v ? 'bg-slate-800' : 'bg-white'} rounded-[1px]"></div>`).join('');
 }
 
-/* ========== PROFILE ========== */
 function whatsapp() {
   showToast('Abrindo WhatsApp da clínica...', 'info');
 }
